@@ -1,12 +1,12 @@
 {
-  "name": "generator-ariatemplate",
+  "name": "generator-ariatemplates",
   "version": "0.0.0",
   "description": "A generator for Yeoman",
   "keywords": [
       "yeoman-generator"
   ],
-  "homepage": "https://github.com/flea89/generator-ariatemplate",
-  "bugs": "https://github.com/flea89/generator-ariatemplate/issues",
+  "homepage": "https://github.com/flea89/generator-ariatemplates",
+  "bugs": "https://github.com/flea89/generator-ariatemplates/issues",
   "author": {
     "name": "Paolo Chillari",
     "email": "killer.paolo@gmail.com",
@@ -15,7 +15,7 @@
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/flea89/generator-ariatemplate.git"
+    "url": "git://github.com/flea89/generator-ariatemplates.git"
   },
   "scripts": {
     "test": "mocha"
