@@ -1,6 +1,7 @@
 'use strict';
 var util = require('util');
 var path = require('path');
+var _ = require('underscore.string');
 var yeoman = require('yeoman-generator');
 
 
@@ -18,6 +19,7 @@ var AriatemplateGenerator = module.exports = function AriatemplateGenerator(args
 
 util.inherits(AriatemplateGenerator, yeoman.generators.Base);
 
+
 AriatemplateGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
 
@@ -25,28 +27,33 @@ AriatemplateGenerator.prototype.askFor = function askFor() {
     console.log(this.yeoman);
 
     var prompts = [{
-            name: 'application name',
+            name: 'appName',
             message: 'What do you want to call your application?',
-            default: 'app'
+            'default': 'app'
         }
     ];
 
-    this.prompt(prompts, function(props) {
-        this.someOption = props.someOption;
-
+    this.prompt(prompts, function afterPrompt(props) {
+        this.appName = props.appName;
         cb();
     }.bind(this));
 };
 
 AriatemplateGenerator.prototype.app = function app() {
-    this.mkdir('app');
-    this.mkdir('app/templates');
+    this.mkdir(_.slugify(this.appName));
 
-    this.copy('_package.json', 'package.json');
-    this.copy('_bower.json', 'bower.json');
+    this.template('_package.json', 'package.json');
+    this.template('_bower.json', 'bower.json');
+    this.template('_index.html', _.slugify(this.appName) + '/index.html');
+    this.template('Gruntfile.js', 'Gruntfile.js');
 };
 
 AriatemplateGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('editorconfig', '.editorconfig');
     this.copy('jshintrc', '.jshintrc');
+};
+
+AriatemplateGenerator.prototype.runtime = function runtime() {
+    this.template('_bowerrc', 'bowerrc');
+    this.copy('gitignore', '.gitignore');
 };
