@@ -41,7 +41,6 @@ AriatemplateGenerator.prototype.askFor = function askFor() {
 
 AriatemplateGenerator.prototype.app = function app() {
     this.mkdir(_.slugify(this.appName));
-
     this.template('_package.json', 'package.json');
     this.template('_bower.json', 'bower.json');
     this.template('_index.html', _.slugify(this.appName) + '/index.html');
