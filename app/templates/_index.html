@@ -1,0 +1,20 @@
+<html>
+<head>
+    <title><%= appName %></title>
+    <script type="text/javascript" src="aria/ariatemplates-1.4.4.js" ></script>
+    <script type="text/javascript" src="aria/css/atskin-1.4.4.js"></script>
+    <script type="text/javascript">
+        Aria.loadTemplate({
+            classpath: 'view.Main',
+            div: "container",
+            moduleCtrl: {
+                classpath: "MainController"
+            }
+        });
+    </script>
+
+</head>
+<body>
+<div id="container"></div>
+</body>
+</html>

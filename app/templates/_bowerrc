@@ -1,0 +1,3 @@
+{
+    "directory": "<%= _.slugify(appName) %>/bower_components"
+}
