@@ -3,5 +3,7 @@
     "version": "0.0.0",
     "appPath": "<%= _.slugify(appName) %>",
     "testPath": "test",
-    "dependencies": {}
+    "dependencies": {
+        "aria": "https://github.com/ariatemplates/ariatemplates.git"
+    }
 }

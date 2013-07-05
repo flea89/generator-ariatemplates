@@ -15,16 +15,13 @@ var TemplateGenerator = module.exports = function TemplateGenerator(args, option
 util.inherits(TemplateGenerator, subgenerator);
 
 TemplateGenerator.prototype.files = function files() {
-    var pathArray = this.name.split('.'),
-        base = pathArray[0],
-        name = pathArray.pop(),
-        templatePath = path.join.apply(null, pathArray);
+    var pathInfo = this.pathFromClassPath(this.name);
 
-    if (base !== 'view') {
+    if (pathInfo.basePath !== 'view') {
         console.log('The template path should be in view directory');
         return;
     }
-    if (name[0].toLowerCase() === name[0]) {
+    if (pathInfo.fileName[0].toLowerCase() === pathInfo.fileName[0]) {
         console.log('Your template class has to be capital letter');
         return;
     }
@@ -32,6 +29,6 @@ TemplateGenerator.prototype.files = function files() {
     this.templateScriptClass = this.name + 'Script';
 
 
-    this.appTemplate('template.tpl', templatePath + '/' + name + '.tpl');
-    this.appTemplate('templateScript.js', templatePath + '/' + name + 'Script.js');
+    this.appTemplate('template.tpl', pathInfo.filePath + '/' + pathInfo.fileName + '.tpl');
+    this.appTemplate('templateScript.js', pathInfo.filePath + '/' + pathInfo.fileName + 'Script.js');
 };

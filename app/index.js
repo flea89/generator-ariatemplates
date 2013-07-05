@@ -4,11 +4,10 @@ var path = require('path');
 var _ = require('underscore.string');
 var yeoman = require('yeoman-generator');
 
-
 var AriatemplateGenerator = module.exports = function AriatemplateGenerator(args, options, config) {
     yeoman.generators.Base.apply(this, arguments);
 
-    this.on('end', function() {
+    this.on('end', function () {
         this.installDependencies({
             skipInstall: options['skip-install']
         });
@@ -18,10 +17,10 @@ var AriatemplateGenerator = module.exports = function AriatemplateGenerator(args
     } catch (e) {
         console.log('package.json is not a valid json'.bold);
     }
+
 };
 
 util.inherits(AriatemplateGenerator, yeoman.generators.Base);
-
 
 AriatemplateGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
@@ -56,12 +55,17 @@ AriatemplateGenerator.prototype.projectfiles = function projectfiles() {
 };
 
 AriatemplateGenerator.prototype.runtime = function runtime() {
-    this.template('_bowerrc', 'bowerrc');
+    this.template('_bowerrc', '.bowerrc');
     this.copy('gitignore', '.gitignore');
 };
 
 AriatemplateGenerator.prototype.mainTemplate = function mainTemplate() {
     this.invoke('ariatemplates:template', {
         args: 'view.Main'
+    });
+};
+AriatemplateGenerator.prototype.mainController = function mainController() {
+    this.invoke('ariatemplates:controller', {
+        args: 'MainController'
     });
 };

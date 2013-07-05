@@ -36,6 +36,17 @@ SubGenerator.prototype.appTemplate = function appTemplate(src, dst) {
         path.join(this.env.options.appPath, dst)
     ]);
 };
+SubGenerator.prototype.pathFromClassPath = function pathFromClassPath(classPath) {
+    var pathArray = classPath.split('.'),
+        base = pathArray[0],
+        name = pathArray.pop(),
+        filePath = path.join.apply(null, pathArray);
+    return {
+        fileName: name,
+        filePath: filePath,
+        basePath: base
+    };
+};
 SubGenerator.prototype.appMkdir = function appMkdir(dir) {
     yeoman.generators.Base.prototype.mkdir.apply(this, [
         path.join(this.env.options.appPath, dir)

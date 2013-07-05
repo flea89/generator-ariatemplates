@@ -4,11 +4,11 @@ var livereloadMiddleware = require('./node_modules/connect-livereload/index.js')
     port: LIVERELOAD_PORT
 });
 
-var mountFolder = function(connect, dir) {
+var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     var ariaConfiguration = {
         root: '<%= _.slugify(appName) %>'
     };
@@ -65,6 +65,9 @@ module.exports = function(grunt) {
             }
 
         },
+        clean: {
+            dev: '.tmp'
+        },
         connect: {
             options: {
                 port: 3000,
@@ -72,14 +75,27 @@ module.exports = function(grunt) {
             },
             dev: {
                 options: {
-                    middleware: function(connect) {
+                    middleware: function (connect) {
                         return [
                             livereloadMiddleware,
+                            mountFolder(connect, '.tmp'),
                             mountFolder(connect, ariaConfiguration.root)
-                        //  mountFolder(connect, 'app')
+
                         ];
                     }
                 }
+            }
+        },
+        coffee: {
+            dev: {
+                files: [{
+                        expand: true,
+                        cwd: '<%= yeoman.app %>/scripts',
+                        src: '{,*/}*.coffee',
+                        dest: '.tmp/scripts',
+                        ext: '.js'
+                    }
+                ]
             }
         }
     });
@@ -89,11 +105,14 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-open');
 
     // Default task.
     grunt.registerTask('default', ['jshint', 'qunit']);
     grunt.registerTask('server', [
+            'clean:dev',
+            'coffe:dev',
             'connect:dev',
             'open',
             'watch:livereload'
