@@ -13,8 +13,11 @@ var AriatemplateGenerator = module.exports = function AriatemplateGenerator(args
             skipInstall: options['skip-install']
         });
     });
-
-    this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+    try {
+        this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
+    } catch (e) {
+        console.log('package.json is not a valid json'.bold);
+    }
 };
 
 util.inherits(AriatemplateGenerator, yeoman.generators.Base);
@@ -55,4 +58,10 @@ AriatemplateGenerator.prototype.projectfiles = function projectfiles() {
 AriatemplateGenerator.prototype.runtime = function runtime() {
     this.template('_bowerrc', 'bowerrc');
     this.copy('gitignore', '.gitignore');
+};
+
+AriatemplateGenerator.prototype.mainTemplate = function mainTemplate() {
+    this.invoke('ariatemplates:template', {
+        args: 'view.Main'
+    });
 };
