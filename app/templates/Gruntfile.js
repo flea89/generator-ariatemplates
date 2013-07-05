@@ -49,6 +49,7 @@ module.exports = function (grunt) {
             }
         },
         watch: {
+
             options: {
                 livereload: LIVERELOAD_PORT
             },
@@ -62,6 +63,10 @@ module.exports = function (grunt) {
             // },
             livereload: {
                 files: ['<%%= ariaTemplate.root%>/**/*.js', './**/*.html', '<%%= ariaTemplate.root %>/view/**/*.tpl']
+            },
+            coffe: {
+                files: ['<%%= ariaTemplate.root%>/**/*.coffee'],
+                tasks: ['clean:dev', 'coffee:dev']
             }
 
         },
@@ -90,9 +95,9 @@ module.exports = function (grunt) {
             dev: {
                 files: [{
                         expand: true,
-                        cwd: '<%= yeoman.app %>/scripts',
+                        cwd: '<%%= ariaTemplate.root %>',
                         src: '{,*/}*.coffee',
-                        dest: '.tmp/scripts',
+                        dest: '.tmp',
                         ext: '.js'
                     }
                 ]
@@ -106,15 +111,15 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-coffee');
+    grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-open');
 
     // Default task.
     grunt.registerTask('default', ['jshint', 'qunit']);
-    grunt.registerTask('server', [
-            'clean:dev',
-            'coffe:dev',
+    grunt.registerTask('server', ['clean:dev',
+            'coffee:dev',
             'connect:dev',
             'open',
-            'watch:livereload'
+            'watch'
     ]);
 };
