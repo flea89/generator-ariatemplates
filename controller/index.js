@@ -15,14 +15,12 @@ var ControllerGenerator = module.exports = function ControllerGenerator(args, op
         console.log('Bower.json isn\'t a valid JSON');
         this.controllerPath = './';
     }
-    console.log(this.controllerPath);
 
+    this.fileSuffix = this.options.coffee ? '.coffee' : '.js';
 
 };
 
 util.inherits(ControllerGenerator, SubGenerator);
-
-
 
 ControllerGenerator.prototype.files = function files() {
     var pathInfo = this.pathFromClassPath(this.name);
@@ -38,6 +36,6 @@ ControllerGenerator.prototype.files = function files() {
     this.controllerClass = this.name;
     this.controllerInterfaceClass = this.name + 'Interface';
 
-    this.appTemplate('Controller.js', pathInfo.filePath + '/' + pathInfo.fileName + '.js');
-    this.appTemplate('ControllerInterface.js', pathInfo.filePath + '/' + pathInfo.fileName + 'Interface.js');
+    this.appTemplate('Controller', pathInfo.filePath + '/' + pathInfo.fileName);
+    this.appTemplate('ControllerInterface', pathInfo.filePath + '/' + pathInfo.fileName + 'Interface');
 };
