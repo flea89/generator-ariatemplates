@@ -25,15 +25,19 @@ var SubGenerator = module.exports = function Generator() {
         } catch (e) {}
         this.env.options.testPath = this.env.options.testPath || 'test/spec';
     }
+    this.option('coffee');
+    this.fileSuffix = '';
 
 };
 
 util.inherits(SubGenerator, yeoman.generators.NamedBase);
 
-SubGenerator.prototype.appTemplate = function appTemplate(src, dst) {
+SubGenerator.prototype.appTemplate = function appTemplate(src, dst, fileExtension) {
+    //If fileExtension is not provided, this.fileSuffix is used instead 
+    var fileSuffix = fileExtension || this.fileSuffix;
     yeoman.generators.Base.prototype.template.apply(this, [
-        src,
-        path.join(this.env.options.appPath, dst)
+        src + fileSuffix,
+        path.join(this.env.options.appPath, dst + fileSuffix)
     ]);
 };
 SubGenerator.prototype.pathFromClassPath = function pathFromClassPath(classPath) {

@@ -8,14 +8,17 @@ var TemplateGenerator = module.exports = function TemplateGenerator(args, option
     // By calling `NamedBase` here, we get the argument to the subgenerator call
     // as `this.name`.
     subgenerator.apply(this, arguments);
+    this.fileSuffix = '.tpl';
 
-    // console.log('You called the template subgenerator with the argument ' + this.name + '.');
 };
 
 util.inherits(TemplateGenerator, subgenerator);
 
 TemplateGenerator.prototype.files = function files() {
-    var pathInfo = this.pathFromClassPath(this.name);
+    var pathInfo = this.pathFromClassPath(this.name),
+        scriptFileSuffix;
+
+    scriptFileSuffix = this.options.coffee ? '.coffee' : '.js';
 
     if (pathInfo.basePath !== 'view') {
         console.log('The template path should be in view directory');
@@ -25,10 +28,10 @@ TemplateGenerator.prototype.files = function files() {
         console.log('Your template class has to be capital letter');
         return;
     }
+
     this.templateClass = this.name;
     this.templateScriptClass = this.name + 'Script';
 
-
-    this.appTemplate('template.tpl', pathInfo.filePath + '/' + pathInfo.fileName + '.tpl');
-    this.appTemplate('templateScript.js', pathInfo.filePath + '/' + pathInfo.fileName + 'Script.js');
+    this.appTemplate('template', pathInfo.filePath + '/' + pathInfo.fileName);
+    this.appTemplate('templateScript', pathInfo.filePath + '/' + pathInfo.fileName + 'Script', scriptFileSuffix);
 };
