@@ -62,7 +62,7 @@ module.exports = function (grunt) {
             //     tasks: ['jshint:libTest', 'qunit']
             // },
             livereload: {
-                files: ['<%%= ariaTemplate.root%>/**/*.js', './**/*.html', '<%%= ariaTemplate.root %>/view/**/*.tpl']
+                files: ['<%%= ariaTemplate.root%>/**/*.js', './**/*.html', '<%%= ariaTemplate.root %>s/**/*.tpl']
             },
             coffe: {
                 files: ['<%%= ariaTemplate.root%>/**/*.coffee'],
